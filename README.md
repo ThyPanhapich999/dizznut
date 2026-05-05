@@ -1,5 +1,8 @@
-# Download the configuration file
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml" -OutFile "C:\Sysmon\sysmonconfig.xml"
+# First, verify Wazuh agent is installed
+Get-Service WazuhSvc
 
-# Verify download
-Get-Content C:\Sysmon\sysmonconfig.xml -First 5
+# Backup current config
+Copy-Item "C:\Program Files (x86)\ossec-agent\ossec.conf" "C:\Program Files (x86)\ossec-agent\ossec.conf.backup"
+
+# Open the config file in Notepad
+notepad "C:\Program Files (x86)\ossec-agent\ossec.conf"
