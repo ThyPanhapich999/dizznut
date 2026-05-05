@@ -1,1 +1,18 @@
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.9.2-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='100.68.84.57' WAZUH_AGENT_NAME='GOAD-WS01' 
+# Create a working directory
+New-Item -ItemType Directory -Force -Path C:\Sysmon
+Set-Location C:\Sysmon
+
+# Download Sysmon from Microsoft
+Write-Host "Downloading Sysmon..." -ForegroundColor Cyan
+Invoke-WebRequest -Uri "https://download.sysinternals.com/files/Sysmon.zip" -OutFile "Sysmon.zip"
+
+# Extract Sysmon
+Expand-Archive -Path Sysmon.zip -DestinationPath C:\Sysmon -Force
+
+# Download the Sysmon configuration file
+Write-Host "Downloading Sysmon configuration..." -ForegroundColor Cyan
+
+# Option 1: SwiftOnSecurity configuration (Recommended - comprehensive coverage)
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml" -OutFile "sysmonconfig.xml"
+
+Write-Host "Downloads complete!" -ForegroundColor Green
